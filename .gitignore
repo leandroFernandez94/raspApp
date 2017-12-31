@@ -57,6 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
-# ignore app compiled js files
-src/**/*.js
-src/**/*.map
+# ignore build files
+build/
