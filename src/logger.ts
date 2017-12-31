@@ -1,5 +1,5 @@
 import { appendFileSync } from "fs";
-import { LOG_FILE_PATH } from "../app-settings";
+import { LOG_FILE_PATH } from "./app-settings";
 import * as moment from "moment";
 
 

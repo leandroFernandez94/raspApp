@@ -1,5 +1,5 @@
 import { readdirSync, PathLike } from "fs";
-import { MOVIES_DIR, PHOTOS_DIR, SERIES_DIR } from "../app-settings.js";
+import { MOVIES_DIR, PHOTOS_DIR, SERIES_DIR } from "./app-settings.js";
 import { log, logError } from "./logger";
 
 interface serviceFunction {
