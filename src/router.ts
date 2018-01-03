@@ -9,6 +9,10 @@ router.use((req, res, next) => {
     next()
 })
 
+router.get('/hello', (req,res) => {
+    res.send('world')
+})
+
 router.get('/movies',(req,res) => {
     res.send(getMoviesList())
 })
