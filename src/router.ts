@@ -17,7 +17,7 @@ router.get('/hello', (req,res) => {
 
 router.get('/movies',async (req,res) => {
     const nodos = await getMoviesList()
-    console.log('nodos',nodos)
+    
     let resp = { files: Array<string>(), directories: Array<string>() };
     nodos.forEach(element => {
         if (element.type == FSType.FILE) {
