@@ -4,11 +4,6 @@ import * as express from "express"
 import appRouter from "./router";
 import { DEV_PORT } from "./app-settings";
 
-
-const MOVIES_DIR = '/home/pi/myBook/films'
-const PHOTOS_DIR = '/home/pi/myBook/fotos'
-const SERIES_DIR = '/home/pi/myBook/series'
-
 const app = express()
 
 app.use(appRouter)
