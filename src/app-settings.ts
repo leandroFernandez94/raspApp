@@ -1,4 +1,4 @@
-export const MOVIES_DIR:string = '/home/pi/myBook/films'
+export const MOVIES_DIR:string = '/home/leandro/Documents'
 export const PHOTOS_DIR:string = '/home/pi/myBook/photos'
 export const SERIES_DIR:string = '/home/pi/myBook/series'
 

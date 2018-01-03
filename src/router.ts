@@ -1,6 +1,8 @@
 import { Router } from "express";
+
 import { log, logWarn } from "./logger";
 import { getMoviesList, getSeriesList, getPhotosList } from "./FSService";
+import { FSType } from "./model/FSType";
 
 const router = Router()
 
@@ -13,8 +15,17 @@ router.get('/hello', (req,res) => {
     res.send('world')
 })
 
-router.get('/movies',(req,res) => {
-    res.send(getMoviesList())
+router.get('/movies',async (req,res) => {
+    const nodos = await getMoviesList()
+    console.log('nodos',nodos)
+    let resp = { files: Array<string>(), directories: Array<string>() };
+    nodos.forEach(element => {
+        if (element.type == FSType.FILE) {
+            resp.files.push(element.filename)
+        } else resp.directories.push(element.filename)
+    });
+
+    res.send(resp)
 })
 
 router.get('/series',(req,res) => {

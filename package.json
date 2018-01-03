@@ -9,6 +9,7 @@
   "author": "Leandro Fernandez",
   "license": "ISC",
   "devDependencies": {
+    "@types/es6-promise": "^3.3.0",
     "@types/express": "^4.11.0",
     "@types/node": "^8.5.2"
   },

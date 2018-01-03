@@ -1,13 +1,33 @@
-import { readdirSync, PathLike } from "fs";
-import { MOVIES_DIR, PHOTOS_DIR, SERIES_DIR } from "./app-settings.js";
-import { log, logError } from "./logger";
+import { readdirSync, readdir, statSync } from "fs";
+import { join } from "path"
 
-interface serviceFunction {
-    (): string[]
+import { MOVIES_DIR, PHOTOS_DIR, SERIES_DIR } from "./app-settings.js"
+import FSNode from "./model/FSNode"
+import { FSType } from "./model/FSType"
+import { log, logError } from "./logger"
+
+export const getMoviesList = async function(): Promise<Array<FSNode>> {
+    return new Promise<Array<FSNode>>((resolve,reject) => {
+        readdir(MOVIES_DIR, (err, files) => {
+            if(err) {
+                reject(err)
+            }
+            resolve(
+                files.reduce((prev: Array<FSNode>, currentNode: string) => {
+                    if(statSync(join(MOVIES_DIR,currentNode)).isFile()){
+                        prev.push(new FSNode(currentNode, FSType.FILE))
+                    }else if(statSync(join(MOVIES_DIR,currentNode)).isDirectory()) {
+                        prev.push(new FSNode(currentNode, FSType.DIRECTORY))
+                    }
+                    return prev
+                },Array<FSNode>())
+            )
+        })
+    })
+
 }
 
-export const getMoviesList: serviceFunction = () => readdirSync(MOVIES_DIR)
 
-export const getPhotosList: serviceFunction = () => readdirSync(PHOTOS_DIR)
+export const getPhotosList = () => readdirSync(PHOTOS_DIR)
 
-export const getSeriesList: serviceFunction = () => readdirSync(SERIES_DIR)
+export const getSeriesList = () => readdirSync(SERIES_DIR)
