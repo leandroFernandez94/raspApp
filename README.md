@@ -1,2 +1,4 @@
-# raspServer
-basic node rest server to access home raspberry media files
+# raspApp
+typescript-based node app that serves raspberry files to a react client Edit
+Add topics
+
