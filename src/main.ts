@@ -8,4 +8,4 @@ const app = express()
 
 app.use(appRouter)
 
-app.listen(DEV_PORT,() => console.log(`listening on port ${DEV_PORT}`))
+app.listen(DEV_PORT, () => console.log(`listening on port ${DEV_PORT}`))

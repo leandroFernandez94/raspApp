@@ -4,7 +4,10 @@
   "description": "node api to serve raspberry fs data",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile-watch": "tsc -w",
+    "start": "node ./build/main.js"
+
   },
   "author": "Leandro Fernandez",
   "license": "ISC",
