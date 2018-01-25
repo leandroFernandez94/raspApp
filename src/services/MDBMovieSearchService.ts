@@ -1,4 +1,4 @@
-import { Moment } from "moment";
+import * as moment from "moment"
 import axios from "axios"
 
 import MDBCommonInterface from '../model/MDBCommonInterface'
@@ -9,10 +9,10 @@ import { MDB_SEARCH_MOVIE_URL, MDB_API_KEY } from "../app-settings";
 export class MDBMovieSearchOutput {
   title: string
   valoration: number
-  releaseDate: Moment
+  releaseDate: moment.Moment
   overview: string
 
-  constructor(_title: string, _valoration: number, _releaseDate: Moment, _overview: string) {
+  constructor(_title: string, _valoration: number, _releaseDate: moment.Moment, _overview: string) {
     this.title = _title
     this.valoration = _valoration
     this.releaseDate = _releaseDate
@@ -24,4 +24,11 @@ export class MDBMovieSearchOutput {
   fetchMovieByTitle(name)
 }*/
 
-export const fetchMovieByTitle = async (name:string) => axios.get(MDB_SEARCH_MOVIE_URL,{ params: { query: name, api_key: MDB_API_KEY } })
+export const fetchMovieByTitle = async (name: string): Promise<MDBMovieSearchOutput> => {
+  const response = await axios.get(MDB_SEARCH_MOVIE_URL, { params: { query: name, api_key: MDB_API_KEY } })
+  const data = await response.data
+  if (data.results.length) {
+    const result = data.results[0]
+    return Promise.resolve(new MDBMovieSearchOutput(result.title, result.vote_average, moment(result.release_date), result.overview))
+  } else throw new Error("Movie title not found")
+}

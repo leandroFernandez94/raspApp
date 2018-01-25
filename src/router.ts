@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { log, logWarn } from "./logger";
 import { getMoviesList, getSeriesList, getPhotosList } from "./services/FSService";
-import { fetchMovieByTitle } from "./services/MDBMovieSearchService"
+import { fetchMovieByTitle, MDBMovieSearchOutput } from "./services/MDBMovieSearchService"
 import { FSType } from "./model/FSType";
 
 const router = Router()
@@ -35,14 +35,14 @@ router.get('/movies', async (req, res) => {
     res.send(resp)
 })
 
-router.get('/movie-by-title',async (req,res) => {
-    const title = req.query.title
-    console.log('title',title)
-    const resp = await fetchMovieByTitle(title)
-    const data = await resp.data
-    if(data.results.length) {
-        res.send(data.results[0])
-    }else res.send('movie title not found')
+router.get('/movie-by-title', async (req, res) => {
+    const title: string = req.query.title
+    try {
+        const resp: MDBMovieSearchOutput = await fetchMovieByTitle(title)
+        res.send(resp)
+    } catch (e) {
+        res.send(e.message)
+    }
 })
 
 router.get('/series', (req, res) => {
