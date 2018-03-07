@@ -32,15 +32,19 @@ router.get('/movies', async (req, res) => {
         } else resp.directories.push(element.filename)
     });
 
+    console.log('resp', resp)
+
     res.send(resp)
 })
 
-router.get('/movie-by-title', async (req, res) => {
-    const title: string = req.query.title
+router.get('/movies/:title', async (req, res) => {
+    const title: string = decodeURI(req.params.title)
     try {
         const resp: MDBMovieSearchOutput = await fetchMovieByTitle(title)
         res.send(resp)
     } catch (e) {
+        console.log(e)
+        res.status(404)
         res.send(e.message)
     }
 })
