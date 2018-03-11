@@ -7,6 +7,7 @@ import { FSType } from "../model/FSType"
 import { log, logError } from "../logger"
 
 export const getMoviesList = async function (): Promise<Array<FSNode>> {
+    console.log(MOVIES_DIR)
     return new Promise<Array<FSNode>>((resolve, reject) => {
         readdir(MOVIES_DIR, (err, files) => {
             if (err) {

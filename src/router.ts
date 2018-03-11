@@ -4,6 +4,8 @@ import { log, logWarn } from "./logger";
 import { getMoviesList, getSeriesList, getPhotosList } from "./services/FSService";
 import { fetchMovieByTitle, MDBMovieSearchOutput } from "./services/MDBMovieSearchService"
 import { FSType } from "./model/FSType";
+import MovieNotFoundException from "./exceptions/MovieNotFoundException"
+import { getInSequence } from "./utils";
 
 const router = Router()
 
@@ -25,14 +27,11 @@ router.get('/hello', (req, res) => {
 router.get('/movies', async (req, res) => {
     const nodos = await getMoviesList()
 
-    let resp = { files: Array<string>(), directories: Array<string>() };
-    nodos.forEach(element => {
-        if (element.type == FSType.FILE) {
-            resp.files.push(element.filename)
-        } else resp.directories.push(element.filename)
-    });
+    const directories = nodos.filter(nodo => nodo.type == FSType.DIRECTORY)
 
-    console.log('resp', resp)
+    const resp: MDBMovieSearchOutput[] = await getInSequence(directories.map(dir => dir.filename),fetchMovieByTitle)
+
+    console.log('movies found in library: ', resp)
 
     res.send(resp)
 })
